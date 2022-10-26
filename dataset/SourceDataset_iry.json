@@ -1,0 +1,53 @@
+{
+	"name": "SourceDataset_iry",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "az_blob_source1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Ag18_race.csv",
+				"container": "source-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CATEGORY",
+				"type": "String"
+			},
+			{
+				"name": "CODE",
+				"type": "String"
+			},
+			{
+				"name": "DISEASE",
+				"type": "String"
+			},
+			{
+				"name": "RACE",
+				"type": "String"
+			},
+			{
+				"name": "Count by Disease Race",
+				"type": "String"
+			},
+			{
+				"name": "Count by Disease",
+				"type": "String"
+			},
+			{
+				"name": "Percentage",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

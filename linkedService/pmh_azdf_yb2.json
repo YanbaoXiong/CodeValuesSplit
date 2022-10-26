@@ -1,0 +1,17 @@
+{
+	"name": "pmh_azdf_yb2",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=True;data source=pmhmerhmdb01;initial catalog=patientMATRIX",
+			"userName": "MEDSTAR\\YXX105",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwNDYxODQ1ZS1iNzU1LTRlMDktOWRkMy0wNWQ1MzI0Zjc1MTciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "medstar-az-is-yb1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

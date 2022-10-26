@@ -1,0 +1,9 @@
+{
+	"name": "medstar-az-test1",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "09e972fb-73e7-4f83-8d31-3392209cae12",
+		"tenantId": "f801529a-55a9-4fd4-9078-19573aa309b0"
+	}
+}

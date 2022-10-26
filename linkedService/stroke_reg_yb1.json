@@ -1,0 +1,17 @@
+{
+	"name": "stroke_reg_yb1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=True;data source=azeus2prmhrireg;initial catalog=Stroke_Registry",
+			"userName": "MEDSTAR\\YXX105",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI0MjBiYzFhMi0yMzAyLTRhNjktYTc5Ny03OTBiYWQ4ZTQ2NmEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "medstar-az-is-yb1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

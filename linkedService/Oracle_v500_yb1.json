@@ -1,0 +1,16 @@
+{
+	"name": "Oracle_v500_yb1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "Oracle",
+		"typeProperties": {
+			"connectionString": "host=137.252.18.149;port=1521;servicename=sp41.world;user id=YXX105",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjM2U0MGM4Ny0yNGY4LTQ2NTAtYWY3My1mZmRjZTk2M2EwMTMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "medstar-az-is-yb1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
