@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "medstar-az-test1"
+		},
+		"Oracle_v500_yb1_connectionString": {
+			"value": ""
+		},
+		"az_blob_source1_connectionString": {
+			"value": ""
+		},
+		"pmh_azdf_yb2_connectionString": {
+			"value": ""
+		},
+		"pmh_azdf_yb2_password": {
+			"value": ""
+		},
+		"stroke_reg_yb1_connectionString": {
+			"value": ""
+		},
+		"stroke_reg_yb1_password": {
+			"value": ""
+		},
+		"pmh_azdf_yb2_properties_typeProperties_userName": {
+			"value": "MEDSTAR\\YXX105"
+		},
+		"stroke_reg_yb1_properties_typeProperties_userName": {
+			"value": "MEDSTAR\\YXX105"
+		}
+	}
+}

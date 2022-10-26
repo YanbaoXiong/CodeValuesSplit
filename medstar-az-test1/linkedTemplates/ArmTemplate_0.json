@@ -1,0 +1,304 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "medstar-az-test1"
+		},
+		"az_blob_source1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'az_blob_source1'"
+		},
+		"Oracle_v500_yb1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Oracle_v500_yb1'"
+		},
+		"pmh_azdf_yb2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'pmh_azdf_yb2'"
+		},
+		"pmh_azdf_yb2_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'pmh_azdf_yb2'"
+		},
+		"stroke_reg_yb1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'stroke_reg_yb1'"
+		},
+		"stroke_reg_yb1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'stroke_reg_yb1'"
+		},
+		"pmh_azdf_yb2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "MEDSTAR\\YXX105"
+		},
+		"stroke_reg_yb1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "MEDSTAR\\YXX105"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/az_blob_source1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('az_blob_source1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/medstar-az-is-yb1')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_iry')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "az_blob_source1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "destination-data"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/az_blob_source1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_iry')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "az_blob_source1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Ag18_race.csv",
+						"container": "source-data"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "CATEGORY",
+						"type": "String"
+					},
+					{
+						"name": "CODE",
+						"type": "String"
+					},
+					{
+						"name": "DISEASE",
+						"type": "String"
+					},
+					{
+						"name": "RACE",
+						"type": "String"
+					},
+					{
+						"name": "Count by Disease Race",
+						"type": "String"
+					},
+					{
+						"name": "Count by Disease",
+						"type": "String"
+					},
+					{
+						"name": "Percentage",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/az_blob_source1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Oracle_v500_yb1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('Oracle_v500_yb1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "medstar-az-is-yb1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/medstar-az-is-yb1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pmh_azdf_yb2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('pmh_azdf_yb2_connectionString')]",
+					"userName": "[parameters('pmh_azdf_yb2_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('pmh_azdf_yb2_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "medstar-az-is-yb1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/medstar-az-is-yb1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/stroke_reg_yb1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('stroke_reg_yb1_connectionString')]",
+					"userName": "[parameters('stroke_reg_yb1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('stroke_reg_yb1_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "medstar-az-is-yb1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/medstar-az-is-yb1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyPipeline_iry')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_AgeGreaterThan18_Cal",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "source-data//Ag18_race.csv"
+							},
+							{
+								"name": "Destination",
+								"value": "destination-data//"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings",
+									"skipLineCount": 0
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"validateDataConsistency": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_iry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_iry",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-09-22T01:26:26Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_iry')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_iry')]"
+			]
+		}
+	]
+}
